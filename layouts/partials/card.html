@@ -2,9 +2,18 @@
 	<a href="{{ .Permalink }}" class="no-underline block">
 		{{/* A span is used instead a div for accessibiliy, <a> tag can't wrap div elements */}}
 			<span class="block">
-				{{ with .Params.banner }}
-				<div class="h-48 overflow-hidden bg-cover bg-center" style="background-image: url('{{ . | absURL }}');">
-				</div>
+				{{ $featured := newScratch }}
+				{{- if isset .Params "featured" }}
+					{{ $featured.Set "value" .Params.featured }}
+				{{ else }}
+					{{ with .Resources.GetMatch "featured" }}
+						{{ $featured.Set "value" .Permalink }}
+					{{ end }}
+				{{ end -}}
+				{{ $bgClass := cond (eq .Params.featured_fit true) "bg-contain bg-no-repeat" "bg-cover" }}
+				{{ with $featured.Get "value" }}
+					<div class="h-48 overflow-hidden {{ $bgClass }} bg-center" style="background-image: url('{{ . | absURL }}');">
+					</div>
 				{{ end }}
 				<div class="px-4 mt-3 mb-3">
 					<h2 class="m-0 inline-block overflow-ellipsis">{{ .Title | emojify }}</h2>
@@ -12,7 +21,7 @@
 						{{ dateFormat "02/01/2006" .Date }} &middot; {{ i18n "reading_time" . }}
 					</span>
 				</div>
-				<div class="px-4 mb-3 text-primary-dark overflow-ellipsis">
+				<div class="px-4 mb-3 text-primary-dark">
 					{{ with .Params.subtitle }}
 					{{ . }}
 					{{ else }}
