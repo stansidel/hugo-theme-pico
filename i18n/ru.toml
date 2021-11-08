@@ -57,3 +57,9 @@ other = "Обязательные поля"
 
 [projects_in_experience]
 other = "Проекты на этом месте"
+
+[experience]
+other = "Опыт"
+
+[projects]
+other = "Проекты"

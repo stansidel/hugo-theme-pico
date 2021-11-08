@@ -57,3 +57,9 @@ other = "Required fields"
 
 [projects_in_experience]
 other = "Projects at this place"
+
+[experience]
+other = "Experience"
+
+[projects]
+other = "Projects"
