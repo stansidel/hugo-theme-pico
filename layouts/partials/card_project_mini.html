@@ -1,0 +1,29 @@
+<div class="mb-4 rounded-md overflow-hidden bg-gray-100 transition ease-in-out duration-300 hover:shadow-4">
+	<a href="{{ .Permalink }}" class="no-underline block">
+		{{/* A span is used instead a div for accessibiliy, <a> tag can't wrap div elements */}}
+			<span class="block">
+				{{ $featured := newScratch }}
+				{{- if isset .Params "featured" }}
+					{{ $featured.Set "value" .Params.featured }}
+				{{ else }}
+					{{ with .Resources.GetMatch "featured" }}
+						{{ $featured.Set "value" .Permalink }}
+					{{ end }}
+				{{ end -}}
+				{{- if eq .Params.featured_position "fit" -}}
+					{{- $featured.Set "bg-class" "bg-contain bg-no-repeat bg-center" -}}
+				{{- else if eq .Params.featured_position "top" -}}
+					{{- $featured.Set "bg-class" "bg-cover bg-top" -}}
+				{{- else -}}
+					{{- $featured.Set "bg-class" "bg-cover bg-center" -}}
+				{{- end -}}
+				{{ with $featured.Get "value" }}
+					<div class="h-32 overflow-hidden {{ $featured.Get "bg-class" }}" style="background-image: url('{{ . | absURL }}');">
+					</div>
+				{{ end }}
+				<div class="px-4 mt-3 mb-3">
+					<h4 class="m-0 text-center text-sm">{{ .Title | emojify }}</h4>
+				</div>
+			</span>
+		</a>
+</div>

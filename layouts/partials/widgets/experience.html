@@ -1,0 +1,79 @@
+{{ $dateFormat := .Params.date_format | default "02.01.2006" }}
+
+<section id="timeline">
+	<div class="text-center w-full mb-8">
+		<h1 class="my-0 text-4xl sm:text-5xl md:text-6xl">
+			{{ .Title }}
+		</h1>
+		{{ with .Params.subtitle}}
+		<h2 class="font-light mt-0">{{ . }}</h2>
+		{{ end }}
+	</div>
+
+	<div class="relative">
+		{{/* Timeline bar */}}
+		<div class="h-full border-l border-primary-dark absolute left-0 md:absolute-center"></div>
+		<div>
+			{{ range $index, $period := ((where (where .Site.Pages "Section" .Params.type) "Kind" "page").ByParam "date_start").Reverse }}
+			{{ $even := modBool $index 2 }}
+
+			{{ $containerClass := "md:mr-auto pl-4 md:pl-0 md:pr-4"}}
+			{{ $projectsClass := "md:order-last" }}
+			{{ $dateClass := "md:text-right font-light text-primary text-xl" }}
+
+			{{ if $even }}
+			{{ $containerClass = "md:ml-auto pl-4"}}
+			{{ $dateClass = "font-light text-primary text-xl" }}
+			{{ $projectsClass = "md:order-first" }}
+			{{ end }}
+
+
+			<div class="{{ $containerClass }}">
+				<div class="md:w-1/2 mb-6 {{ $containerClass }}">
+					{{ if eq .Params.date_end "" }}
+					<div class="mb-4 {{ $dateClass }}">{{ i18n "present" }}</div>
+					{{ else }}
+					<div class="mb-4 {{ $dateClass }}">{{ .Params.date_end | dateFormat $dateFormat }}
+					</div>
+					{{ end }}
+				</div>
+
+				<div class="md:grid gap-8 md:grid-cols-2">
+					<div
+						class="p-4 border-2 border-primary-light dark:border-secondary-light rounded-md transition ease-in-out duration-300 shadow-2 hover:shadow-8 ">
+						<h2 class="inline-block my-0 text-primary">{{ .Params.title | markdownify }}</h2>
+
+						{{ with .Params.location }}
+						<span class="mx-2">&middot; {{ . }}</span>
+						{{ end }}
+
+						<h3 class="mt-1 mb-0 text-primary-dark">{{ .Params.subtitle | markdownify }}</h3>
+
+						<div class="mb-2 text-primary">
+							<p>{{ .Content }}</p>
+						</div>
+					</div>
+					
+					<div class="{{ $projectsClass }}">
+					{{ if isset .Params "projects" }}
+						<h3 class="projects-in-experience-title text-center mb-4">{{ i18n "projects_in_experience"}}</h3>
+						<div class="projects-in-experience gap-4 sm:grid sm:grid-cols-2">
+							{{ range .Params.projects }}
+								{{ with $.Site.GetPage . }}
+									{{ partial "card_project_mini" . }}
+								{{ end }}
+							{{ end }}
+						</div>
+					{{ end }}
+					</div>
+				</div>
+				
+				<div class="md:w-1/2 mb-6 {{ $containerClass }}">
+					<div class="mt-4 {{ $dateClass }}">{{ .Params.date_start | dateFormat $dateFormat }}</div>
+				</div>
+			</div>
+
+			{{ end }}
+		</div>
+	</div>
+</section>

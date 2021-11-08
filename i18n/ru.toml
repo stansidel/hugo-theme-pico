@@ -54,3 +54,6 @@ other = "Настоящее время"
 
 [required_fields]
 other = "Обязательные поля"
+
+[projects_in_experience]
+other = "Проекты на этом месте"
