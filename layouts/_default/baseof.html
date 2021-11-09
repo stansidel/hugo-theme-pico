@@ -27,6 +27,8 @@
 		{{/* {{- partial "dev/parameters.html" . -}} */}}
 	</div>
 	{{ partial "head/js.html" . }}
+	{{/* This div is here so that table-wrapper is not stripped from the generated css */}}
+	<div class="table-wrapper" style="display: none;"></div>
 </body>
 
 </html>
