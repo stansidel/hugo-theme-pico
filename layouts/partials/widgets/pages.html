@@ -35,13 +35,17 @@
 		{{ else }}
 		{{ .Content }}
 		{{ end }}
-
-		{{- with .Params.allLinkTitle -}}
-			<a 
-				class="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow no-underline"
-				href="{{ $archive_page.Permalink }}">
-				{{ . }}
-			</a>
-		{{- end -}}
 	</div>
+
+	{{- if gt (len $archive_page.RegularPages) $items_count -}}
+		{{- with .Params.allLinkTitle -}}
+			<div class="mt-8 flex flex-wrap justify-around">
+				<a 
+					class="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow no-underline"
+					href="{{ $archive_page.Permalink }}">
+					{{ . }}
+				</a>
+			</div>
+		{{- end -}}
+	{{- end -}}
 </section>
