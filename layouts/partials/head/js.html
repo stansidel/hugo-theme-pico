@@ -12,6 +12,9 @@
 {{ $js_bundle = $js_bundle | append (resources.Get "js/dark-mode.js") }}
 {{ end }}
 
+{{ $js_bundle = $js_bundle | append (resources.Get "js/even.js") }}
+{{ $js_bundle = $js_bundle | append (resources.Get "js/main.js") }}
+
 {{ if gt (len $js_bundle) 0 }}
 
 {{ $js_bundle = $js_bundle | resources.Concat "js/pico.min.js" | fingerprint "md5" }}

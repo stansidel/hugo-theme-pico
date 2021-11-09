@@ -3,7 +3,6 @@
 
 <head>
 	{{ partial "head/metadata.html" . }}
-	{{ partial "head/js.html" . }}
 	{{ partial "head/css.html" . }}
 </head>
 
@@ -27,6 +26,7 @@
 		{{- partial "footer.html" . -}}
 		{{/* {{- partial "dev/parameters.html" . -}} */}}
 	</div>
+	{{ partial "head/js.html" . }}
 </body>
 
 </html>
