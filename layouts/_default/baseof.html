@@ -4,6 +4,7 @@
 <head>
 	{{ partial "head/metadata.html" . }}
 	{{ partial "head/css.html" . }}
+	{{ partial "additional_head.html" . }}
 </head>
 
 <body class="min-h-screen bg-secondary-light dark:bg-secondary text-primary relative pb-24">
@@ -12,6 +13,7 @@
 
 	{{- partial "dev/size-indicator.html" . -}}
 	{{- partial "header.html" . -}}
+	{{- partial "after_header.html" -}}
 
 	{{ $mainClass := "" }}
 	{{ if .IsHome }}
@@ -29,6 +31,7 @@
 	{{ partial "head/js.html" . }}
 	{{/* This div is here so that table-wrapper is not stripped from the generated css */}}
 	<div class="table-wrapper" style="display: none;"></div>
+	{{- partial "after_footer.html" -}}
 </body>
 
 </html>
