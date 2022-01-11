@@ -31,7 +31,15 @@
 					{{ with .Params.subtitle }}
 					{{ . }}
 					{{ else }}
-					{{ substr .Plain 0 256 }}
+						{{ if (isset .Params "description") }}
+							{{ .Params.description }}
+						{{ else }}
+							{{ with .Summary }}
+								{{ . }}
+							{{ else }}
+								{{ substr .Plain 0 256 }}
+							{{ end }}
+						{{ end }}
 					{{ end }}
 					<span class="text-xs mt-3 block no-underline">{{ i18n "read_more" }}...</span>
 				</div>
